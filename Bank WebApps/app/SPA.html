@@ -1,0 +1,108 @@
+﻿
+    
+    <div class="col-md-6 col-md-offset-1" *ngIf="visKundeListe">
+        <div class="row text-center">
+            <h1>Velkommen til SANDØY BANK</h1>
+            <h2 class="reverse-color"><small>Sandøy Bank sikter seg inn mot å gi den beste lånetilbudet til våre kunder. Dette vil si  gode vilkår for bankkontoer og lån, samt at våre tjenester skal være lett tilgjengelig hvor enn du er.</small></h2>     
+        </div>
+        <div *ngIf="laster">Laster kunder.....</div>
+        <div class="container">
+           <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <th class="col-md-3">Personnummer</th>
+                        <th class="col-md-3">Fornavn</th>
+                        <th class="col-md-3">Etternavn</th>
+                        <th class="col-md-3">Telefonnummer</th>
+                        <th class="col-md-3">Mail</th>
+                        <th class="col-md-2">Lånesum</th>
+                        <th class="col-md-3">Avdragstid i antall år</th>
+                        <th class="col-md-2">Terminbeløp</th>
+                    </tr>
+                    <tbody *ngFor="let customer of alleKunder">
+                    <tr>
+                        <td>{{customer.PersonalNumber}}</td>
+                        <td>{{customer.FirstName}}</td>
+                        <td>{{customer.LastName}}</td>
+                        <td>{{customer.PhoneNumber}}</td>
+                        <td>{{customer.Email}}</td>
+                        <td>{{customer.loanAmount}}</td>
+                        <td>{{customer.loanYears}}</td>
+                        <td>{{customer.monthlyFee}}</td>
+                        <td><button class="btn btn-danger" (click)="sletteKunde(customer.PersonalNumber)">Slett</button></td>
+                        <td><button class="btn btn-success" (click)="endreKunde(customer.PersonalNumber)">Endre</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+
+            <button class='btn btn-primary' (click)='registrerKunde()'>Register kunde</button>
+        </div>
+        </div>
+
+
+<div class="col-sm-4 col-sm-offset-2" *ngIf="visSkjema">
+    <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+        <div class="form-group">
+            <label>Personnummer</label>
+            <input class="form-control" formControlName="personalNumber" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.personalNumber.valid || (skjema.controls.personalNumber.pristine && !submitted)">
+                Personnummer er obligatorisk.
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Fornavn</label>
+            <input class="form-control" formControlName="firstName" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.firstName.valid || (skjema.controls.firstName.pristine && !submitted)">
+                Fornavn er obligatorisk.
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Etternavn</label>
+            <input class="form-control" formControlName="lastName" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.lastName.valid || (skjema.controls.lastName.pristine && !submitted)">
+                Etternavn er obligatorisk.
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Telefonnummer</label>
+            <input class="form-control" formControlName="phoneNumber" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.phoneNumber.valid || (skjema.controls.phoneNumber.pristine && !submitted)">
+                Telefonnummer er obligatorisk.
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Mail</label>
+            <input class="form-control" formControlName="email" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.email.valid || (skjema.controls.email.pristine && !submitted)">
+                Mail er obligatorisk
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Lånesum</label>
+            <input class="form-control" formControlName="loanAmount" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.loanAmount.valid || (skjema.controls.loanAmount.pristine && !submitted)">
+                Lånesum er obligatorisk og må være mellom 1000,- og 500.000,-
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Avdragstid i antall år</label>
+            <input class="form-control" formControlName="loanYears" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.loanYears.valid || (skjema.controls.loanYears.pristine && !submitted)">
+                Antall år er obligatorisk og må være mellom 1 og 10.
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Terminavdrag</label>
+            <label id="monthlyFee">0</label>
+        </div>
+        <div class="form-group">
+            <button type="submit" *ngIf="skjemaStatus=='Endre'" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
+            <button class="btn btn-default" *ngIf="skjemaStatus=='Registrere'" [disabled]="!skjema.valid" (click)="genererBelop()">Generer terminbeløp</button>
+            <button type="submit" *ngIf="skjemaStatus=='Registrere'" [disabled]="!skjema.valid" class="btn btn-primary">Registrer deg og søk om lån</button>
+            <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
+        </div>
+    </form>
+</div>
