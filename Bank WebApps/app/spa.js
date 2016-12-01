@@ -25,7 +25,8 @@ var SPA = (function () {
             phoneNumber: ["", [forms_1.Validators.required, forms_1.Validators.pattern("[0-9]{8}")]],
             email: ["", [forms_1.Validators.required, forms_1.Validators.pattern("^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$")]],
             loanAmount: ["", [forms_1.Validators.required, forms_1.Validators.pattern("([1-9][0-9]{3,4}|[1-4][0-9]{5}|500000)")]],
-            loanYears: ["", [forms_1.Validators.required, forms_1.Validators.pattern("^([1-9]|10)$")]]
+            loanYears: ["", [forms_1.Validators.required, forms_1.Validators.pattern("^([1-9]|10)$")]],
+            monthlyFee: ["", forms_1.Validators.required]
         });
     }
     SPA.prototype.ngOnInit = function () {
@@ -74,6 +75,7 @@ var SPA = (function () {
         this.skjema.patchValue({ email: "" });
         this.skjema.patchValue({ loanFee: "" });
         this.skjema.patchValue({ loanYears: "" });
+        this.skjema.patchValue({ monthlyFee: "" });
         this.visKundeListe = false;
         this.skjemaStatus = "Registrere";
         this.visSkjema = true;
@@ -87,6 +89,7 @@ var SPA = (function () {
         var amount = this.skjema.value.loanAmount;
         var monthlyFee = ((0.07 * amount) / (1 - (Math.pow((1 + 0.07), -year)))) / 12;
         this.skjema.value.monthlyFee = monthlyFee;
+        this.skjema.patchValue({ monthlyFee: monthlyFee });
     };
     SPA.prototype.lagreKunde = function () {
         var _this = this;

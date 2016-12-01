@@ -25,7 +25,8 @@ export class SPA {
             phoneNumber: ["", [Validators.required, Validators.pattern("[0-9]{8}")]],
             email: ["", [Validators.required, Validators.pattern("^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$")]],
             loanAmount: ["", [Validators.required, Validators.pattern("([1-9][0-9]{3,4}|[1-4][0-9]{5}|500000)")]],
-            loanYears: ["", [Validators.required, Validators.pattern("^([1-9]|10)$")]]
+            loanYears: ["", [Validators.required, Validators.pattern("^([1-9]|10)$")]],
+            monthlyFee: ["", Validators.required]
     });
     }
 
@@ -79,6 +80,7 @@ export class SPA {
         this.skjema.patchValue({ email: "" });
         this.skjema.patchValue({ loanFee: "" });
         this.skjema.patchValue({ loanYears: "" });
+        this.skjema.patchValue({ monthlyFee: ""});
         this.visKundeListe = false;
         this.skjemaStatus = "Registrere";
         this.visSkjema = true;
@@ -97,6 +99,7 @@ export class SPA {
         var monthlyFee = ((0.07 * amount) / (1 - (Math.pow((1 + 0.07),-year))))/12;
 
         this.skjema.value.monthlyFee = monthlyFee;
+        this.skjema.patchValue({ monthlyFee: monthlyFee });
 
     }
 
