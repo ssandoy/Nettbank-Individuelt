@@ -10,9 +10,16 @@ namespace Bank_WebApps.Models
     {
         DbModel db = new DbModel();
 
-        public List<ViewModel.Customer> getCustomers()
+        public decimal calculateMonthlyFee(int G, int n)
         {
-            List<ViewModel.Customer> customers = db.Customers.Select(k => new ViewModel.Customer()
+            var r = 0.07;
+            var y = (r * G) / (1 - Math.Pow(1 + r, -n));
+            return (decimal) y/12;
+        }
+
+        public List<DomainModel.Customer> getCustomers()
+        {
+            List<DomainModel.Customer> customers = db.Customers.Select(k => new DomainModel.Customer()
             {
                 PersonalNumber = k.PersonalNumber,
                 FirstName = k.FirstName,
@@ -26,7 +33,7 @@ namespace Bank_WebApps.Models
             return customers;
         }
 
-        public bool saveCustomer(ViewModel.Customer customer)
+        public bool saveCustomer(DomainModel.Customer customer)
         {
             var newCustomer = new Customers
             {
@@ -37,7 +44,7 @@ namespace Bank_WebApps.Models
                 Email = customer.Email,
                 loanAmount = customer.loanAmount,
                 loanYears = customer.loanYears,
-                monthlyFee = customer.monthlyFee
+                monthlyFee = calculateMonthlyFee(customer.loanAmount, customer.loanYears)
             };
 
             
@@ -71,7 +78,7 @@ namespace Bank_WebApps.Models
             return true;
         }
 
-        public bool changeCustomer(string id, ViewModel.Customer customer)
+        public bool changeCustomer(string id, DomainModel.Customer customer)
         {
             // finn kunden
             Customers customers = db.Customers.FirstOrDefault(k => k.PersonalNumber == id);
@@ -84,6 +91,9 @@ namespace Bank_WebApps.Models
             customers.LastName = customer.LastName;
             customers.PhoneNumber = customer.PhoneNumber;
             customers.Email = customer.Email;
+            customers.monthlyFee = customer.monthlyFee;
+            customers.loanAmount = customer.loanAmount;
+            customers.loanYears = customer.loanYears;
             try
             {
                 // lagre kunden
@@ -96,11 +106,11 @@ namespace Bank_WebApps.Models
             return true;
         }
 
-        public ViewModel.Customer getCustomer(string id)
+        public DomainModel.Customer getCustomer(string id)
         {
             Customers dbCustomers = db.Customers.Find(id);
 
-            var enKunde = new ViewModel.Customer()
+            var enKunde = new DomainModel.Customer()
             {
                 PersonalNumber = dbCustomers.PersonalNumber,
                 FirstName = dbCustomers.FirstName,

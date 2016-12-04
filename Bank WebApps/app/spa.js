@@ -24,9 +24,9 @@ var SPA = (function () {
             lastName: ["", forms_1.Validators.required],
             phoneNumber: ["", [forms_1.Validators.required, forms_1.Validators.pattern("[0-9]{8}")]],
             email: ["", [forms_1.Validators.required, forms_1.Validators.pattern("^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$")]],
-            loanAmount: ["", [forms_1.Validators.required, forms_1.Validators.pattern("([1-9][0-9]{3,4}|[1-4][0-9]{5}|500000)")]],
+            loanAmount: ["", [forms_1.Validators.required]],
             loanYears: ["", [forms_1.Validators.required, forms_1.Validators.pattern("^([1-9]|10)$")]],
-            monthlyFee: ["", forms_1.Validators.required]
+            monthlyFee: ["",]
         });
     }
     SPA.prototype.ngOnInit = function () {
@@ -73,9 +73,10 @@ var SPA = (function () {
         this.skjema.patchValue({ lastName: "" });
         this.skjema.patchValue({ phoneNumber: "" });
         this.skjema.patchValue({ email: "" });
-        this.skjema.patchValue({ loanFee: "" });
+        this.skjema.patchValue({ loanAmount: "" });
         this.skjema.patchValue({ loanYears: "" });
         this.skjema.patchValue({ monthlyFee: "" });
+        this.skjema.markAsPristine(true);
         this.visKundeListe = false;
         this.skjemaStatus = "Registrere";
         this.visSkjema = true;
@@ -83,13 +84,6 @@ var SPA = (function () {
     SPA.prototype.tilbakeTilListe = function () {
         this.visKundeListe = true;
         this.visSkjema = false;
-    };
-    SPA.prototype.genererBelop = function () {
-        var year = this.skjema.value.loanYears;
-        var amount = this.skjema.value.loanAmount;
-        var monthlyFee = ((0.07 * amount) / (1 - (Math.pow((1 + 0.07), -year)))) / 12;
-        this.skjema.value.monthlyFee = monthlyFee;
-        this.skjema.patchValue({ monthlyFee: monthlyFee });
     };
     SPA.prototype.lagreKunde = function () {
         var _this = this;
@@ -101,7 +95,6 @@ var SPA = (function () {
         lagretKunde.email = this.skjema.value.email;
         lagretKunde.loanAmount = this.skjema.value.loanAmount;
         lagretKunde.loanYears = this.skjema.value.loanYears;
-        lagretKunde.monthlyFee = this.skjema.value.monthlyFee;
         var body = JSON.stringify(lagretKunde);
         var headers = new http_2.Headers({ "Content-Type": "application/json" });
         this._http.post("api/Customer", body, { headers: headers })
@@ -137,6 +130,9 @@ var SPA = (function () {
             _this.skjema.patchValue({ lastName: JsonData.LastName });
             _this.skjema.patchValue({ phoneNumber: JsonData.PhoneNumber });
             _this.skjema.patchValue({ email: JsonData.Email });
+            _this.skjema.patchValue({ monthlyFee: JsonData.monthlyFee });
+            _this.skjema.patchValue({ loanYears: JsonData.loanYears });
+            _this.skjema.patchValue({ loanAmount: JsonData.loanAmount });
         }, function (error) { return alert(error); }, function () { return console.log("ferdig get-api/kunde"); });
         this.skjemaStatus = "Endre";
         this.visSkjema = true;
@@ -151,6 +147,8 @@ var SPA = (function () {
         endretKunde.lastName = this.skjema.value.lastName;
         endretKunde.phoneNumber = this.skjema.value.phoneNumber;
         endretKunde.email = this.skjema.value.email;
+        endretKunde.loanAmount = this.skjema.value.loanAmount;
+        endretKunde.loanYears = this.skjema.value.loanYears;
         var body = JSON.stringify(endretKunde);
         var headers = new http_2.Headers({ "Content-Type": "application/json" });
         this._http.put("api/Customer/" + this.skjema.value.personalNumber, body, { headers: headers })
@@ -164,7 +162,8 @@ var SPA = (function () {
     SPA = __decorate([
         core_1.Component({
             selector: "min-app",
-            templateUrl: "./app/SPA.html"
+            templateUrl: "./app/SPA.html",
+            styleUrls: ["./stylesheet.css"]
         }), 
         __metadata('design:paramtypes', [http_1.Http, forms_1.FormBuilder])
     ], SPA);

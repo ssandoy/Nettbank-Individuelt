@@ -7,7 +7,8 @@ import {Customer} from "./Customer";
 
 @Component({
     selector: "min-app",
-    templateUrl:"./app/SPA.html" 
+    templateUrl:"./app/SPA.html",
+    styleUrls: ["./stylesheet.css"]
 })
 export class SPA {
     public alleKunder: Array<Customer>;  
@@ -24,9 +25,9 @@ export class SPA {
             lastName:  ["", Validators.required],
             phoneNumber: ["", [Validators.required, Validators.pattern("[0-9]{8}")]],
             email: ["", [Validators.required, Validators.pattern("^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$")]],
-            loanAmount: ["", [Validators.required, Validators.pattern("([1-9][0-9]{3,4}|[1-4][0-9]{5}|500000)")]],
+            loanAmount: ["", [Validators.required]],
             loanYears: ["", [Validators.required, Validators.pattern("^([1-9]|10)$")]],
-            monthlyFee: ["", Validators.required]
+            monthlyFee: ["", ]
     });
     }
 
@@ -78,9 +79,10 @@ export class SPA {
         this.skjema.patchValue({ lastName: "" });
         this.skjema.patchValue({ phoneNumber: "" });
         this.skjema.patchValue({ email: "" });
-        this.skjema.patchValue({ loanFee: "" });
+        this.skjema.patchValue({ loanAmount: "" });
         this.skjema.patchValue({ loanYears: "" });
         this.skjema.patchValue({ monthlyFee: ""});
+        this.skjema.markAsPristine(true);
         this.visKundeListe = false;
         this.skjemaStatus = "Registrere";
         this.visSkjema = true;
@@ -92,17 +94,6 @@ export class SPA {
         this.visSkjema = false;
     }
 
-    genererBelop() {
-        var year = this.skjema.value.loanYears;
-        var amount = this.skjema.value.loanAmount;
-
-        var monthlyFee = ((0.07 * amount) / (1 - (Math.pow((1 + 0.07),-year))))/12;
-
-        this.skjema.value.monthlyFee = monthlyFee;
-        this.skjema.patchValue({ monthlyFee: monthlyFee });
-
-    }
-
     lagreKunde() {
         var lagretKunde = new Customer();
         lagretKunde.personalNumber = this.skjema.value.personalNumber;
@@ -112,7 +103,6 @@ export class SPA {
         lagretKunde.email = this.skjema.value.email;
         lagretKunde.loanAmount = this.skjema.value.loanAmount;
         lagretKunde.loanYears = this.skjema.value.loanYears;
-        lagretKunde.monthlyFee = this.skjema.value.monthlyFee;
 
        
         var body: string = JSON.stringify(lagretKunde);
@@ -157,6 +147,10 @@ export class SPA {
                 this.skjema.patchValue({ lastName: JsonData.LastName });
                 this.skjema.patchValue({ phoneNumber: JsonData.PhoneNumber });
                 this.skjema.patchValue({ email: JsonData.Email });
+                this.skjema.patchValue({ monthlyFee: JsonData.monthlyFee });
+                this.skjema.patchValue({ loanYears: JsonData.loanYears });
+                this.skjema.patchValue({ loanAmount: JsonData.loanAmount });
+                
                 },
             error => alert(error),
             () => console.log("ferdig get-api/kunde")
@@ -173,6 +167,8 @@ export class SPA {
         endretKunde.lastName = this.skjema.value.lastName;
         endretKunde.phoneNumber = this.skjema.value.phoneNumber;
         endretKunde.email = this.skjema.value.email;
+        endretKunde.loanAmount = this.skjema.value.loanAmount;
+        endretKunde.loanYears = this.skjema.value.loanYears;
 
         var body: string = JSON.stringify(endretKunde);
         var headers = new Headers({ "Content-Type": "application/json" });

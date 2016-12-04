@@ -122,19 +122,19 @@
     <Content Include="app\SPA.html" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
+    <Content Include="stylesheet.css" />
     <Content Include="systemjs.config.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
-    <Compile Include="Controllers\LoanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="DbAccess.cs" />
     <Compile Include="Models\DbModel.cs" />
-    <Compile Include="Models\ViewModel.cs" />
+    <Compile Include="Models\DomainModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

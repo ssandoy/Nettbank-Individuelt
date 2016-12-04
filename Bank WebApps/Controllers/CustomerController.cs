@@ -18,7 +18,7 @@ namespace Bank_WebApps.Controllers
         // GET api/<controller>
         public HttpResponseMessage Get()
         {
-            List<ViewModel.Customer> allCustomers = AccessDb.getCustomers();
+            List<DomainModel.Customer> allCustomers = AccessDb.getCustomers();
 
             var Json = new JavaScriptSerializer();
             string JsonString = Json.Serialize(allCustomers);
@@ -33,7 +33,7 @@ namespace Bank_WebApps.Controllers
         // GET api/<controller>/5
         public HttpResponseMessage Get(string id)
         {
-            ViewModel.Customer customer = AccessDb.getCustomer(id);
+            DomainModel.Customer customer = AccessDb.getCustomer(id);
 
             var Json = new JavaScriptSerializer();
             string JsonString = Json.Serialize(customer);
@@ -47,7 +47,7 @@ namespace Bank_WebApps.Controllers
 
         // POST api/Customer
         [HttpPost]
-        public HttpResponseMessage Post([FromBody]ViewModel.Customer CustomerIn)
+        public HttpResponseMessage Post([FromBody]DomainModel.Customer CustomerIn)
         {
 
             if (ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace Bank_WebApps.Controllers
 
 
         // PUT api/Customer/5
-        public HttpResponseMessage Put(string id, [FromBody]ViewModel.Customer customer)
+        public HttpResponseMessage Put(string id, [FromBody]DomainModel.Customer customer)
         {
             if (ModelState.IsValid)
             {

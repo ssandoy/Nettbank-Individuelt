@@ -1,42 +1,66 @@
 ﻿
-    
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="nav navbar-brand">
+                <p>BEBA & SANDØY BANK</p>
+
+            </div>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right"></ul>
+        </div>
+    </div>
+</div>
+
+<div class="container body-content my-container">
+
     <div class="col-md-10 col-md-offset-1" *ngIf="visKundeListe">
         <div class="row text-center">
             <h1>Velkommen til SANDØY BANK</h1>
-            <h2 class="reverse-color"><small>Sandøy Bank sikter seg inn mot å gi den beste lånetilbudet til våre kunder. Dette vil si ekstremt gode vilkår på våre lån, samt at våre tjenester skal være lett tilgjengelig hvor enn du er.</small></h2>  
-            <h3 class="reverse-color"> LÅNESØKNADER</h3>   
+            <h2 class="reverse-color">
+                <small>Sandøy Bank sikter seg inn mot å gi den beste lånetilbudet til våre kunder. Dette vil si ekstremt gode vilkår på våre lån, samt at våre tjenester skal være lett tilgjengelig hvor enn du er.</small>
+            </h2>
+            <h3 class="reverse-color"> LÅNESØKNADER</h3>
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
                 <div *ngIf="laster">Laster kunder.....</div>
                 <div class="table table-responsive">
                     <table class="table table-hover table-inverse">
-                        <thead >
-                        <tr>
-                            <th class="text-center">Personnummer</th>
-                            <th class="text-center">Fornavn</th>
-                            <th class="text-center">Etternavn</th>
-                            <th class="text-center">Telefonnummer</th>
-                            <th class="text-center">Mail</th>
-                            <th class="text-center">Lånesum</th>
-                            <th class="text-center">Avdragstid i antall år</th>
-                            <th class="text-center">Terminbeløp</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th class="text-center">Personnummer</th>
+                                <th class="text-center">Navn</th>
+                                <th class="text-center">Telefonnummer</th>
+                                <th class="text-center">Mail</th>
+                                <th class="text-center">Lånesum</th>
+                                <th class="text-center">Avdragstid i antall år</th>
+                                <th class="text-center">Terminbeløp</th>
+                            </tr>
                         </thead>
 
                         <tbody *ngFor="let customer of alleKunder">
-                        <tr>
-                            <td class="text-center">{{customer.PersonalNumber}}</td>
-                            <td class="text-center">{{customer.FirstName}}</td>
-                            <td class="text-center">{{customer.LastName}}</td>
-                            <td class="text-center">{{customer.PhoneNumber}}</td>
-                            <td class="text-center">{{customer.Email}}</td>
-                            <td class="text-center">{{customer.loanAmount}}</td>
-                            <td class="text-center">{{customer.loanYears}}</td>
-                            <td class="text-center">{{customer.monthlyFee}}</td>
-                            <td><button class="btn btn-danger" (click)="sletteKunde(customer.PersonalNumber)">Slett</button></td>
-                            <td><button class="btn btn-success" (click)="endreKunde(customer.PersonalNumber)">Endre</button></td>
-                        </tr>
+                            <tr>
+                                <td class="text-center">{{customer.PersonalNumber}}</td>
+                                <td class="text-center">{{customer.FirstName}} {{customer.LastName}}</td>
+                                <td class="text-center">{{customer.PhoneNumber}}</td>
+                                <td class="text-center">{{customer.Email}}</td>
+                                <td class="text-center">{{customer.loanAmount}}</td>
+                                <td class="text-center">{{customer.loanYears}}</td>
+                                <td class="text-center">{{customer.monthlyFee}}</td>
+                                <td>
+                                    <button class="btn btn-danger" (click)="sletteKunde(customer.PersonalNumber)">Slett</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-success" (click)="endreKunde(customer.PersonalNumber)">Endre</button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -44,72 +68,74 @@
 
             <button class='btn btn-primary' (click)='registrerKunde()'>Register kunde</button>
         </div>
-        </div>
+    </div>
 
 
-<div class="col-sm-4 col-sm-offset-2" *ngIf="visSkjema">
-    <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
-        <div class="form-group">
-            <label>Personnummer</label>
-            <input class="form-control" formControlName="personalNumber" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.personalNumber.valid || (skjema.controls.personalNumber.pristine && !submitted)">
-                Personnummer er obligatorisk og må være på 11 siffer.
-            </p>
-        </div>
-        <div class="form-group">
-            <label>Fornavn</label>
-            <input class="form-control" formControlName="firstName" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.firstName.valid || (skjema.controls.firstName.pristine && !submitted)">
-                Fornavn er obligatorisk.
-            </p>
-        </div>
-        <div class="form-group">
-            <label>Etternavn</label>
-            <input class="form-control" formControlName="lastName" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.lastName.valid || (skjema.controls.lastName.pristine && !submitted)">
-                Etternavn er obligatorisk.
-            </p>
-        </div>
-        <div class="form-group">
-            <label>Telefonnummer</label>
-            <input class="form-control" formControlName="phoneNumber" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.phoneNumber.valid || (skjema.controls.phoneNumber.pristine && !submitted)">
-                Telefonnummer er obligatorisk og må være på 8 siffer.
-            </p>
-        </div>
-        <div class="form-group">
-            <label>Mail</label>
-            <input class="form-control" formControlName="email" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.email.valid || (skjema.controls.email.pristine && !submitted)">
-                Mail er obligatorisk og er på formen: "brukernavn@domene"
-            </p>
-        </div>
-        <div class="form-group">
-            <label>Lånesum</label>
-            <input class="form-control" formControlName="loanAmount" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.loanAmount.valid || (skjema.controls.loanAmount.pristine && !submitted)">
-                Lånesum er obligatorisk og må være mellom 1000,- og 500.000,-
-            </p>
-        </div>
-        <div class="form-group">
-            <label>Avdragstid i antall år</label>
-            <input class="form-control" formControlName="loanYears" />
-            <p class="alert alert-warning" [hidden]="skjema.controls.loanYears.valid || (skjema.controls.loanYears.pristine && !submitted)">
-                Antall år er obligatorisk og må være mellom 1 og 10.
-            </p>
-        </div>
-        <div class="form-group">
-            <label>Terminavdrag</label>
-            <input class="form-control" formControlName="monthlyFee" type="number"  readonly>
-            <p class="alert alert-warning" [hidden]="!submitted">
-                Du må generere lånebeløp før du kan registrere deg.
-            </p>
-        </div>
-        <div class="form-group">
-            <button type="submit" *ngIf="skjemaStatus=='Endre'" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
-            <button class="btn btn-default" type="button" [disabled]="!(skjema.controls.loanYears.valid && skjema.controls.loanAmount.valid)" (click)="genererBelop()">Generer terminbeløp</button>
-            <button type="submit" *ngIf="skjemaStatus=='Registrere'" [disabled]="!skjema.valid" class="btn btn-primary">Registrer deg og søk om lån</button>
-            <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
-        </div>
-    </form>
-</div>
+    <div class="col-sm-4 col-sm-offset-2" *ngIf="visSkjema">
+        <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+            <div class="form-group">
+                <label>Personnummer</label>
+                <input class="form-control" formControlName="personalNumber" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.personalNumber.valid || (skjema.controls.personalNumber.pristine && !submitted)">
+                    Personnummer er obligatorisk og må være på 11 siffer.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Fornavn</label>
+                <input class="form-control" formControlName="firstName" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.firstName.valid || (skjema.controls.firstName.pristine && !submitted)">
+                    Fornavn er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Etternavn</label>
+                <input class="form-control" formControlName="lastName" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.lastName.valid || (skjema.controls.lastName.pristine && !submitted)">
+                    Etternavn er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Telefonnummer</label>
+                <input class="form-control" formControlName="phoneNumber" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.phoneNumber.valid || (skjema.controls.phoneNumber.pristine && !submitted)">
+                    Telefonnummer er obligatorisk og må være på 8 siffer.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Mail</label>
+                <input class="form-control" formControlName="email" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.email.valid || (skjema.controls.email.pristine && !submitted)">
+                    Mail er obligatorisk og er på formen: "brukernavn@domene"
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Lånesum</label>
+                <input class="form-control" id="Amount" type="range" min="1000" max="500000" value="1000" step="1000" onchange="updateAmount(value);" oninput="updateAmount(value)" formControlName="loanAmount" />
+                <p id="textInput">1000,-</p>
+            </div>
+            <div class="form-group">
+                <label>Avdragstid i antall år</label>
+                <input class="form-control" id="years" type="number" min="1" max="10" value="1" onchange="calculateMonthlyFee(document.getElementById('Amount').value, value)" oninput="calculateMonthlyFee(document.getElementById('Amount').value, value)" formControlName="loanYears" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.loanYears.valid || (skjema.controls.loanYears.pristine && !submitted)">
+                    Antall år er obligatorisk og må være mellom 1 og 10.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Terminavdrag</label>
+                <input class="form-control" id="monthlyFee" type="number" formControlName="monthlyFee" readonly>
+                <p class="alert alert-warning" [hidden]="!submitted">
+                    Du må generere lånebeløp før du kan registrere deg.
+                </p>
+            </div>
+            <div class="form-group">
+                <button type="submit" *ngIf="skjemaStatus=='Endre'" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
+                <button type="submit" *ngIf="skjemaStatus=='Registrere'" [disabled]="!skjema.valid" class="btn btn-primary">Registrer deg og søk om lån</button>
+                <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
+            </div>
+        </form>
+    </div>
+    </div>
+    <div class="container body-content my-footer row text-center">
+        <p id="date"></p><p>Sandøy Bank</p>
+    </div>
+

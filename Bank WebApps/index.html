@@ -11,25 +11,49 @@
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="systemjs.config.js"></script>
+    
     <script>
-        System.import('app').catch(function(err){ console.error(err); });
+
+
+    function calculateMonthlyFee(G, n) {
+        if (n === "") {
+            document.getElementById('monhtlyFee').innerHTML = "N/A";
+            return;
+        }
+        var r = 0.07;
+        var y = (r * G) / (1 - Math.pow(1 + r, -n));
+
+        console.log(document.getElementById('monthlyFee'))
+
+        document.getElementById('monthlyFee').innerHTML = (y / 12).toFixed(2);
+        document.getElementById('monthlyFee').value = (y / 12).toFixed(2);    }
+
+    function updateAmount(val) {
+        document.getElementById('textInput').innerHTML = val + ",-";
+
+        calculateMonthlyFee(val, document.getElementById('years').value);
+    }
+    
+    System.import('app').catch(function (err) { console.error(err); });
+
+    n = new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    document.getElementById("date").value = m + "/" + d + "/" + y;
     </script>
 
 
+ 
 </head>
 <body>
 
 <min-app>
     <h1>Laster vennligst vent...</h1></min-app>
+
 </body>
+
 </html>
 
-<script type="text/javascript"></script>
 
-<script>
-    
-    function calculateLoan() {
-        
-    }
 
-</script>
