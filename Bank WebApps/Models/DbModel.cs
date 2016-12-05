@@ -39,19 +39,7 @@ namespace Bank_WebApps.Models
         public decimal monthlyFee { get; set; }
 
 
-        // TODO: LEGGE TIL LAANESOKNDAER I PERSON
+       
     }
 
- /*   public class Loans
-    {
-        [Key]
-        public string loanNumber { get; set; }
-        public string PersonalNumber { get; set; }
-        public int loanAmount { get; set; }
-        public int monthlyAmount { get; set; } //TODO BEDRE NAVN
-        public virtual Customers Owner { get; set; }
-
-
-    }
-    */
 }

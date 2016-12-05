@@ -120,6 +120,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\SPA.html" />
+    <Content Include="App_Data\Database.mdf" />
+    <Content Include="App_Data\Database_log.ldf">
+      <DependentUpon>Database.mdf</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="stylesheet.css" />
@@ -152,13 +156,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\Customer.ts" />
-    <TypeScriptCompile Include="app\showCustomers.ts" />
     <TypeScriptCompile Include="app\spa.ts" />
     <TypeScriptCompile Include="app\main.ts" />
   </ItemGroup>

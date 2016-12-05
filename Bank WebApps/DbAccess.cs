@@ -86,12 +86,12 @@ namespace Bank_WebApps.Models
             {
                 return false;
             }
-            // legg inn ny verdier i denne fra innKunde
+            // legg inn ny verdier i denne fra customer
             customers.FirstName = customer.FirstName;
             customers.LastName = customer.LastName;
             customers.PhoneNumber = customer.PhoneNumber;
             customers.Email = customer.Email;
-            customers.monthlyFee = customer.monthlyFee;
+            customers.monthlyFee = calculateMonthlyFee(customer.loanAmount, customer.loanYears);
             customers.loanAmount = customer.loanAmount;
             customers.loanYears = customer.loanYears;
             try

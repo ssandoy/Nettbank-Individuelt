@@ -4,10 +4,15 @@
     font-size: 12px !important;
     letter-spacing: 3px;
     z-index: 1;
+    color: white;
 }
 
 .navbar li a, .navbar, .navbar-brand a {
     color: white !important;
+}
+
+.navbar-brand {
+    color: white;
 }
 
 .navbar-nav li a:hover, .navbar-nav li.active a {
@@ -49,6 +54,7 @@ img {
 
 .my-footer {
     background-color: cornflowerblue;
+    align-self: center;
 }
 
 .my-footer p {
@@ -64,6 +70,7 @@ img {
 
     .my-footer {
         width: 970px !important;
+        align-content: center;
     }
 }
 
@@ -128,4 +135,17 @@ td a {
 
 
 
+#regKunde {
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+
+#footer {  
+   bottom : 2px;  
+   height : 40px;  
+   margin-top : 40px;  
+   text-align: center;  
+   vertical-align: middle; 
+   width:100%;
+}
 
